@@ -1,0 +1,31 @@
+{
+  "name": "parsick",
+  "version": "1.0.0",
+  "description": "Parse any data sick and select only the healthy fields",
+  "main": "index.js",
+  "scripts": {
+    "test": "scripts/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thebergamo/parsick.git"
+  },
+  "keywords": [
+    "parse",
+    "data",
+    "json",
+    "fields"
+  ],
+  "author": "Marcos Bérgamo <marcos@thedon.com.br>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "3.0.5",
+    "lodash": "3.10.1",
+    "xml2js": "0.4.15"
+  },
+  "devDependencies": {
+    "chai": "3.4.1",
+    "istanbul": "0.4.0",
+    "mocha": "2.3.3"
+  }
+}
