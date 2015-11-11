@@ -12,7 +12,7 @@ module.exports = Parsick;
 
 Parsick.prototype.parse = function (type, source, fields) {
   if(arguments.length < 3) {
-    throw new TypeError('You need send \'type\', \'source\' and \'fields\' to parse your data');
+    throw new TypeError(`You need send 'type', 'source' and 'fields' to parse your data`);
   }
 
   if(!_.has(this.adapters, type)) {
@@ -26,7 +26,7 @@ function loadAdapters () {
   let adapters = {};
   loader('adapters').forEach((adapter) => {
     let name = adapter.name.toLowerCase();
-    adapters[name] = adapter.File;  
+    adapters[name] = adapter.File;
   });
   return adapters;
 }
