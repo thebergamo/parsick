@@ -24,9 +24,10 @@ Parsick.prototype.parse = function (type, source, fields) {
 
 function loadAdapters () {
   let adapters = {};
-  loader('adapters').forEach((adapter) => {
+
+  for (let adapter of loader('adapters')) {
     let name = adapter.name.toLowerCase();
-    adapters[name] = adapter.File;  
-  });
+    adapters[name] = adapter.File;
+  }
   return adapters;
 }
