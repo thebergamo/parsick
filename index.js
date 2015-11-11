@@ -12,7 +12,7 @@ module.exports = Parsick;
 
 Parsick.prototype.parse = function (type, source, fields) {
   if(arguments.length < 3) {
-    throw new TypeError('You need send \'type\', \'source\' and \'fields\' to parse your data');
+    throw new TypeError(`You need send 'type', 'source' and 'fields' to parse your data`);
   }
 
   if(!_.has(this.adapters, type)) {
