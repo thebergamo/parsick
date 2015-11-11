@@ -31,12 +31,12 @@ describe('Parsick module', () => {
 
     it('should have json parser', () => {
       expect(parsick.adapters).to.have.property('json');
-      expect(parsick.adapters.json).to.be.a('function'); 
+      expect(parsick.adapters.json).to.be.a('function');
     });
 
     it('should have xml parser', () => {
       expect(parsick.adapters).to.have.property('xml');
-      expect(parsick.adapters.xml).to.be.a('function'); 
+      expect(parsick.adapters.xml).to.be.a('function');
     });
   });
 
@@ -45,7 +45,7 @@ describe('Parsick module', () => {
       it('when no arguments are passed', () => {
         let fn = () => { parsick.parse() };
         expect(fn).to.be.throw(TypeError);
-        expect(fn).to.be.throw('You need send \'type\', \'source\' and \'fields\' to parse your data');
+        expect(fn).to.be.throw(`You need send 'type', 'source' and 'fields' to parse your data`);
       });
 
       it('when type has a invalid type', () => {
