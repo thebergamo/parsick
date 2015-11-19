@@ -5,11 +5,18 @@ let _ = require('lodash');
 module.exports = parseJson;
 
 function parseJson (source, fields) {
-  if (!_.isArray(source)) {
-    source = [source];
+  if (_.isString(source)) {
+    try {
+      source = JSON.parse(source);
+    } catch (err) {
+      throw new SyntaxError('There are errors in your JSON: '+ err.message);
+    }
   }
+  
+  source = [source];
 
   return _.map(source, pick).shift();
+
 
   function pick (obj) {
     return picker(obj, fields);
@@ -20,18 +27,17 @@ function picker (obj, keys) {
   let res = [];
   let ret;
 
-  _.forEach(obj, nestedPick);
-
-  if(_.isEmpty(res) && (ret = _.pick(obj, keys)) && !_.isEmpty(ret)) {
+  if((ret = _.pick(obj, picki)) && !_.isEmpty(ret)) {
     res.push(ret);
   }
+
+  _.forEach(obj, nestedPick);
 
   return res;
 
   function nestedPick (obj) {
     let ret;
-
-    if(_.isObject(obj) && (ret = _.pick(obj, keys)) && !_.isEmpty(ret)) {
+    if(_.isObject(obj) && (ret = _.pick(obj, picki)) && !_.isEmpty(ret)) {
       res.push(ret);
     } else if(_.isObject(obj)) {
       obj = picker(obj, keys);
@@ -39,6 +45,10 @@ function picker (obj, keys) {
         res = obj;
       }
     }
+  }
+
+  function picki (v, k) {
+    return keys.indexOf(k.toLowerCase()) > -1; 
   }
 }
 

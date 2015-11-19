@@ -8,6 +8,17 @@ describe('JSON adapter', () => {
     expect(parseJson).to.be.a('function');
   });
 
+  describe('when a broken json is passed', () => {
+    let jsonSample = '{mark: 0, }';
+
+    it('should throw a SyntaxError', () => {
+      let fn = () => { parseJson(jsonSample, 'mark'); };
+
+      expect(fn).to.throw(SyntaxError);
+      expect(fn).to.throw(/There are errors in your JSON: /);
+    });
+  });
+
   describe('when one layer json is passed', () => {
     let jsonSample = {mark: 1, mark2: 0};
     it('should accept one field', () => {
