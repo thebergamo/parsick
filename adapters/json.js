@@ -27,6 +27,8 @@ function picker (obj, keys) {
   let res = [];
   let ret;
 
+  keys = keys.map((key) => key.toLowerCase());
+
   if((ret = _.pick(obj, picki)) && !_.isEmpty(ret)) {
     res.push(ret);
   }
