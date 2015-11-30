@@ -1,6 +1,8 @@
 'use strict';
 
-let expect = require('chai').expect;
+let chai = require('chai');
+chai.use(require('chai-things'));
+let expect = chai.expect;
 let Parsick = require('../index');
 
 // create a new Parsick
@@ -59,7 +61,8 @@ describe('Parsick module', () => {
       let ret = parsick.parse('json', {mark: 1, mark2: 0}, 'mark');
       expect(ret).to.be.an('array');
       expect(ret).to.have.length.least(1);
-      expect(ret[0]).to.have.property('mark', 1);
+      expect(ret).all.have.property('mark', 1);
+      expect(ret).all.not.have.property('mark2');
     });
   });
 });
