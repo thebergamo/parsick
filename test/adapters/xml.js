@@ -1,6 +1,8 @@
 'use strict';
 
-let expect = require('chai').expect;
+let chai = require('chai');
+chai.use(require('chai-things'));
+let expect = chai.expect;
 let parseXml = require('../../adapters/xml');
 
 describe('XML adapter', () => {
@@ -24,7 +26,7 @@ describe('XML adapter', () => {
 
       expect(ret).to.be.an('array');
       expect(ret).to.have.length.least(1);
-      expect(ret[0]).to.have.property('mark', 1);
+      expect(ret).all.have.property('mark');
     });
 
     it('should accept an array fields', () => {
@@ -32,8 +34,8 @@ describe('XML adapter', () => {
 
       expect(ret).to.be.an('array');
       expect(ret).to.have.length.least(1);
-      expect(ret[0]).to.have.property('mark', 1);
-      expect(ret[0]).to.have.property('mark2', 0);
+      expect(ret).all.have.property('mark');
+      expect(ret).all.have.property('mark2');
     });
 
     it('should accept an empty string', () => {
@@ -51,34 +53,39 @@ describe('XML adapter', () => {
     });
   });
 
-  describe('when a nested layer json is passed', () => {  
-    let xmlSample = '<?xml version="1.0"?>\
-      <catalog>\
-        <book id="bk101">\
-          <author>Gambardella, Matthew</author>\
-          <title>XML Developers Guide</title>\
-          <genre>Computer</genre>\
-          <price>44.95</price>\
-          <publish_date>2000-10-01</publish_date>\
-          <description>An in-depth look at creating applications with XML.</description>\
-        </book>\
-        <book id="bk102">\
-          <author>Ralls, Kim</author>\
-          <title>Midnight Rain</title>\
-          <genre>Fantasy</genre>\
-          <price>5.95</price>\
-          <publish_date>2000-12-16</publish_date>\
-          <description>A former architect battles corporate zombies, of the world.</description>\
-        </book>\
-      </catalog>';
+  describe('when a nested layer json is passed', () => {
+    let xmlSample = `<?xml version="1.0"?>
+      <catalog>
+        <book id="bk101">
+          <author>Gambardella, Matthew</author>
+          <title>XML Developers Guide</title>
+          <genre>Computer</genre>
+          <price>44.95</price>
+          <publish_date>2000-10-01</publish_date>
+          <description>An in-depth look at creating applications with XML.</description>
+        </book>
+        <book id="bk102">
+          <author>Ralls, Kim</author>
+          <title>Midnight Rain</title>
+          <genre>Fantasy</genre>
+          <price>5.95</price>
+          <publish_date>2000-12-16</publish_date>
+          <description>A former architect battles corporate zombies, of the world.</description>
+        </book>
+      </catalog>`;
 
     it('should accept one field', () => {
       let ret = parseXml(xmlSample, 'author');
 
       expect(ret).to.be.an('array');
       expect(ret).to.have.length.least(2);
-      expect(ret[0]).to.have.property('author', 'Gambardella, Matthew');
-      expect(ret[1]).to.have.property('author', 'Ralls, Kim');
+      expect(ret).all.have.property('author');
+
+      expect(ret).all.not.have.property('id');
+      expect(ret).all.not.have.property('title');
+      expect(ret).all.not.have.property('price');
+      expect(ret).all.not.have.property('publish_date');
+      expect(ret).all.not.have.property('description');
     });
 
     it('should accept an array fields', () => {
@@ -86,10 +93,14 @@ describe('XML adapter', () => {
 
       expect(ret).to.be.an('array');
       expect(ret).to.have.length.least(2);
-      expect(ret[0]).to.have.property('author', 'Gambardella, Matthew');
-      expect(ret[0]).to.have.property('title', 'XML Developers Guide');
-      expect(ret[1]).to.have.property('author', 'Ralls, Kim');
-      expect(ret[1]).to.have.property('title', 'Midnight Rain');
+      expect(ret).all.have.property('author');
+      expect(ret).all.have.property('title');
+
+
+      expect(ret).all.not.have.property('id');
+      expect(ret).all.not.have.property('price');
+      expect(ret).all.not.have.property('publish_date');
+      expect(ret).all.not.have.property('description');
     });
 
     it('should accept an empty string', () => {
@@ -106,6 +117,5 @@ describe('XML adapter', () => {
       expect(ret).to.be.empty;
     });
   });
-
 });
 

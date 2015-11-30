@@ -1,6 +1,8 @@
 'use strict';
 
-let expect = require('chai').expect;
+let chai = require('chai');
+chai.use(require('chai-things'));
+let expect = chai.expect;
 let parseJson = require('../../adapters/json');
 
 describe('JSON adapter', () => {
@@ -26,7 +28,7 @@ describe('JSON adapter', () => {
 
       expect(ret).to.be.an('array');
       expect(ret).to.have.length.least(1);
-      expect(ret[0]).to.have.property('mark', 1);
+      expect(ret).all.have.property('mark');
     });
 
     it('should accept an array fields', () => {
@@ -34,8 +36,8 @@ describe('JSON adapter', () => {
 
       expect(ret).to.be.an('array');
       expect(ret).to.have.length.least(1);
-      expect(ret[0]).to.have.property('mark', 1);
-      expect(ret[0]).to.have.property('mark2', 0);
+      expect(ret).all.have.property('mark');
+      expect(ret).all.have.property('mark2');
     });
 
     it('should accept an empty string', () => {
@@ -53,7 +55,7 @@ describe('JSON adapter', () => {
     });
   });
 
-  describe('when a nested layer json is passed', () => {  
+  describe('when a nested layer json is passed', () => {
     let jsonSample = {
       catalog : {
         book: [
@@ -79,8 +81,11 @@ describe('JSON adapter', () => {
 
       expect(ret).to.be.an('array');
       expect(ret).to.have.length.least(2);
-      expect(ret[0]).to.have.property('author', 'Gambardella, Matthew');
-      expect(ret[1]).to.have.property('author', 'Ralls, Kim');
+      expect(ret).all.have.property('author');
+
+      expect(ret).all.not.have.property('id');
+      expect(ret).all.not.have.property('title');
+      expect(ret).all.not.have.property('price');
     });
 
     it('should accept an array fields', () => {
@@ -88,10 +93,11 @@ describe('JSON adapter', () => {
 
       expect(ret).to.be.an('array');
       expect(ret).to.have.length.least(2);
-      expect(ret[0]).to.have.property('author', 'Gambardella, Matthew');
-      expect(ret[0]).to.have.property('title', 'XML Developers');
-      expect(ret[1]).to.have.property('author', 'Ralls, Kim');
-      expect(ret[1]).to.have.property('title', 'Midnight Rain');
+      expect(ret).all.have.property('author');
+      expect(ret).all.have.property('title');
+
+      expect(ret).all.not.have.property('id');
+      expect(ret).all.not.have.property('price');
     });
 
     it('should accept an empty string', () => {
