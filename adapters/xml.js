@@ -1,8 +1,8 @@
 'use strict';
 
-let _ = require('lodash');
-let xml = require('xml2json');
-let parseJson = require('./json');
+var _ = require('lodash');
+var xml = require('xml2json');
+var parseJson = require('./json');
 
 module.exports = parseXml;
 
@@ -11,7 +11,7 @@ function parseXml (source, fields) {
     throw new TypeError('XML source must be an String');
   }
 
-  let obj = xml.toJson(source, {object: true, coerce: true});
+  var obj = xml.toJson(source, {object: true, coerce: true});
 
   return parseJson(obj, fields);
 }

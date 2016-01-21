@@ -1,6 +1,6 @@
 'use strict';
 
-let _ = require('lodash');
+var _ = require('lodash');
 
 module.exports = parseJson;
 
@@ -24,13 +24,13 @@ function parseJson (source, fields) {
 }
 
 function picker (obj, keys) {
-  let res = [];
-  let ret;
+  var res = [];
+  var ret;
 
   if (!_.isArray(keys)) {
     keys = [keys];
   }
-  keys = keys.map((key) => key.toLowerCase());
+  keys = keys.map(function (key) { return key.toLowerCase() });
 
   if((ret = _.pick(obj, picki)) && !_.isEmpty(ret)) {
     res.push(ret);
@@ -41,7 +41,7 @@ function picker (obj, keys) {
   return res;
 
   function nestedPick (obj) {
-    let ret;
+    var ret;
     if(_.isObject(obj) && (ret = _.pick(obj, picki)) && !_.isEmpty(ret)) {
       res.push(ret);
     } else if(_.isObject(obj)) {

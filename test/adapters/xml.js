@@ -1,34 +1,34 @@
 'use strict';
 
-let expect = require('chai').expect;
-let parseXml = require('../../adapters/xml');
+var expect = require('chai').expect;
+var parseXml = require('../../adapters/xml');
 
-describe('XML adapter', () => {
-  it('should be a function', () => {
+describe('XML adapter', function () {
+  it('should be a function', function () {
     expect(parseXml).to.be.a('function');
   });
 
-  describe('when a non string is passed', () => {
-    it('should throw an TypeError', () => {
-      let fn = () => { parseXml(1, 'mark'); };
+  describe('when a non string is passed', function () {
+    it('should throw an TypeError', function () {
+      var fn = function () { parseXml(1, 'mark'); };
 
       expect(fn).to.be.throw(TypeError);
       expect(fn).to.be.throw('XML source must be an String');
     });
   });
 
-  describe('when one layer json is passed', () => {
-    let xmlSample = '<root><mark>1</mark><mark2>0</mark2></root>';
-    it('should accept one field', () => {
-      let ret = parseXml(xmlSample, 'mark');
+  describe('when one layer json is passed', function () {
+    var xmlSample = '<root><mark>1</mark><mark2>0</mark2></root>';
+    it('should accept one field', function () {
+      var ret = parseXml(xmlSample, 'mark');
 
       expect(ret).to.be.an('array');
       expect(ret).to.have.length.least(1);
       expect(ret[0]).to.have.property('mark', 1);
     });
 
-    it('should accept an array fields', () => {
-      let ret = parseXml(xmlSample, ['mark', 'mark2']);
+    it('should accept an array fields', function () {
+      var ret = parseXml(xmlSample, ['mark', 'mark2']);
 
       expect(ret).to.be.an('array');
       expect(ret).to.have.length.least(1);
@@ -36,23 +36,23 @@ describe('XML adapter', () => {
       expect(ret[0]).to.have.property('mark2', 0);
     });
 
-    it('should accept an empty string', () => {
-      let ret = parseXml(xmlSample, '');
+    it('should accept an empty string', function () {
+      var ret = parseXml(xmlSample, '');
 
       expect(ret).to.be.an('array');
       expect(ret).to.be.empty;
     });
 
-    it('should empty when field is not found', () => {
-      let ret = parseXml(xmlSample, 'bug');
+    it('should empty when field is not found', function () {
+      var ret = parseXml(xmlSample, 'bug');
 
       expect(ret).to.be.an('array');
       expect(ret).to.be.empty;
     });
   });
 
-  describe('when a nested layer json is passed', () => {  
-    let xmlSample = '<?xml version="1.0"?>\
+  describe('when a nested layer json is passed', function () {  
+    var xmlSample = '<?xml version="1.0"?>\
       <catalog>\
         <book id="bk101">\
           <author>Gambardella, Matthew</author>\
@@ -72,8 +72,8 @@ describe('XML adapter', () => {
         </book>\
       </catalog>';
 
-    it('should accept one field', () => {
-      let ret = parseXml(xmlSample, 'author');
+    it('should accept one field', function () {
+      var ret = parseXml(xmlSample, 'author');
 
       expect(ret).to.be.an('array');
       expect(ret).to.have.length.least(2);
@@ -81,8 +81,8 @@ describe('XML adapter', () => {
       expect(ret[1]).to.have.property('author', 'Ralls, Kim');
     });
 
-    it('should accept an array fields', () => {
-      let ret = parseXml(xmlSample, ['title', 'author']);
+    it('should accept an array fields', function () {
+      var ret = parseXml(xmlSample, ['title', 'author']);
 
       expect(ret).to.be.an('array');
       expect(ret).to.have.length.least(2);
@@ -92,15 +92,15 @@ describe('XML adapter', () => {
       expect(ret[1]).to.have.property('title', 'Midnight Rain');
     });
 
-    it('should accept an empty string', () => {
-      let ret = parseXml(xmlSample, '');
+    it('should accept an empty string', function () {
+      var ret = parseXml(xmlSample, '');
 
       expect(ret).to.be.an('array');
       expect(ret).to.be.empty;
     });
 
-    it('should empty when field is not found', () => {
-      let ret = parseXml(xmlSample, 'bug');
+    it('should empty when field is not found', function () {
+      var ret = parseXml(xmlSample, 'bug');
 
       expect(ret).to.be.an('array');
       expect(ret).to.be.empty;
